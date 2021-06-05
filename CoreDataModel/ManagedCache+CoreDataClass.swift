@@ -11,4 +11,10 @@ import Foundation
 import CoreData
 
 @objc(ManagedCache)
-public class ManagedCache: NSManagedObject {}
+public class ManagedCache: NSManagedObject {
+	static func find(in context: NSManagedObjectContext) throws -> ManagedCache? {
+		let request = ManagedCache.fetchRequest() as NSFetchRequest<ManagedCache>
+		request.returnsObjectsAsFaults = false
+		return try context.fetch(request).first
+	}
+}

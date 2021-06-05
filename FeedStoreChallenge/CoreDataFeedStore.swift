@@ -47,6 +47,10 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
+				try ManagedCache.find(in: context).map {
+					context.delete($0)
+				}
+
 				let managedCache = ManagedCache(context: context)
 				managedCache.feed = ManagedFeedImage.managedFeedImages(from: feed, in: context)
 				managedCache.timestamp = timestamp

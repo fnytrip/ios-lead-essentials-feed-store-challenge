@@ -32,7 +32,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				if let cache = try ManagedCache.find(in: context) {
+				if let cache = try ManagedCache.findFirst(in: context) {
 					completion(.found(feed: cache.localFeeds, timestamp: cache.timestamp))
 				} else {
 					completion(.empty)
@@ -47,10 +47,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				try ManagedCache.find(in: context).map {
-					context.delete($0)
-				}
-
+				try ManagedCache.deleteAll(in: context)
 				let managedCache = ManagedCache(context: context)
 				managedCache.feed = ManagedFeedImage.managedFeedImages(from: feed, in: context)
 				managedCache.timestamp = timestamp
@@ -67,10 +64,8 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				if let managedCache = try ManagedCache.find(in: context) {
-					context.delete(managedCache)
-					try context.save()
-				}
+				try ManagedCache.deleteAll(in: context)
+				try context.save()
 				completion(nil)
 			} catch {
 				context.rollback()

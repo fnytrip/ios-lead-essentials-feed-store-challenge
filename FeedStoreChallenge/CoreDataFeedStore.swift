@@ -46,7 +46,25 @@ public final class CoreDataFeedStore: FeedStore {
 	}
 
 	public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
-		fatalError("Must be implemented")
+		let context = self.context
+		context.perform {
+			do {
+				let managedCache = ManagedCache(context: context)
+				managedCache.feed = NSOrderedSet(array: feed.map { local in
+					let managedFeedImage = ManagedFeedImage(context: context)
+					managedFeedImage.id = local.id
+					managedFeedImage.imageDescription = local.description
+					managedFeedImage.location = local.location
+					managedFeedImage.url = local.url
+					return managedFeedImage
+				})
+				managedCache.timestamp = timestamp
+				try context.save()
+				completion(nil)
+			} catch {
+				completion(error)
+			}
+		}
 	}
 
 	public func deleteCachedFeed(completion: @escaping DeletionCompletion) {

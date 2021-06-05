@@ -11,4 +11,8 @@ import Foundation
 import CoreData
 
 @objc(ManagedFeedImage)
-public class ManagedFeedImage: NSManagedObject {}
+public class ManagedFeedImage: NSManagedObject {
+	var local: LocalFeedImage {
+		return LocalFeedImage(id: id, description: imageDescription, location: location, url: url)
+	}
+}

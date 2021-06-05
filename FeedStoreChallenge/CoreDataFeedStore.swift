@@ -29,7 +29,6 @@ public final class CoreDataFeedStore: FeedStore {
 	}
 
 	public func retrieve(completion: @escaping RetrievalCompletion) {
-		completion(.empty)
 		let context = self.context
 		context.perform {
 			let request = ManagedCache.fetchRequest() as NSFetchRequest<ManagedCache>

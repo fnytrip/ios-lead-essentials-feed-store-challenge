@@ -17,4 +17,8 @@ public class ManagedCache: NSManagedObject {
 		request.returnsObjectsAsFaults = false
 		return try context.fetch(request).first
 	}
+
+	var localFeeds: [LocalFeedImage] {
+		return feed.compactMap { $0 as? ManagedFeedImage }.map { $0.local }
+	}
 }

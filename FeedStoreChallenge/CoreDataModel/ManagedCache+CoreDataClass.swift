@@ -24,7 +24,7 @@ public class ManagedCache: NSManagedObject {
 		let _ = try context.fetch(request).map { context.delete($0) }
 	}
 
-	var localFeeds: [LocalFeedImage] {
+	var localFeed: [LocalFeedImage] {
 		return feed.compactMap { $0 as? ManagedFeedImage }.map { $0.local }
 	}
 }

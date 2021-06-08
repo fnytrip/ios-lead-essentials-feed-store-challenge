@@ -26,3 +26,12 @@ final class ManagedCache: NSManagedObject {
 		return feed.compactMap { $0 as? ManagedFeedImage }.map { $0.local }
 	}
 }
+
+extension ManagedCache {
+	@nonobjc class func fetchRequest() -> NSFetchRequest<ManagedCache> {
+		return NSFetchRequest<ManagedCache>(entityName: "ManagedCache")
+	}
+
+	@NSManaged var timestamp: Date
+	@NSManaged var feed: NSOrderedSet
+}

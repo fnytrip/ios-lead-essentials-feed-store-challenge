@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 @objc(ManagedCache)
-public class ManagedCache: NSManagedObject {
+final class ManagedCache: NSManagedObject {
 	static func findFirst(in context: NSManagedObjectContext) throws -> ManagedCache? {
 		let request = ManagedCache.fetchRequest() as NSFetchRequest<ManagedCache>
 		request.returnsObjectsAsFaults = false

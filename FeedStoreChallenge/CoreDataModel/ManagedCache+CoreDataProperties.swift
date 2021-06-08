@@ -11,12 +11,12 @@ import Foundation
 import CoreData
 
 extension ManagedCache {
-	@nonobjc public class func fetchRequest() -> NSFetchRequest<ManagedCache> {
+	@nonobjc class func fetchRequest() -> NSFetchRequest<ManagedCache> {
 		return NSFetchRequest<ManagedCache>(entityName: "ManagedCache")
 	}
 
-	@NSManaged public var timestamp: Date
-	@NSManaged public var feed: NSOrderedSet
+	@NSManaged var timestamp: Date
+	@NSManaged var feed: NSOrderedSet
 }
 
 // MARK: Generated accessors for feed

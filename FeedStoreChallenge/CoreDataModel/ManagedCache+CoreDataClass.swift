@@ -18,10 +18,8 @@ final class ManagedCache: NSManagedObject {
 		return try context.fetch(request).first
 	}
 
-	static func deleteAll(in context: NSManagedObjectContext) throws {
-		let request = ManagedCache.fetchRequest() as NSFetchRequest<ManagedCache>
-		request.returnsDistinctResults = false
-		let _ = try context.fetch(request).map { context.delete($0) }
+	static func deleteFirst(in context: NSManagedObjectContext) throws {
+		let _ = try findFirst(in: context).map { context.delete($0) }
 	}
 
 	var localFeed: [LocalFeedImage] {

@@ -47,7 +47,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				try ManagedCache.deleteAll(in: context)
+				try ManagedCache.deleteFirst(in: context)
 				let managedCache = ManagedCache(context: context)
 				managedCache.feed = ManagedFeedImage.managedFeedImages(from: feed, in: context)
 				managedCache.timestamp = timestamp
@@ -64,7 +64,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				try ManagedCache.deleteAll(in: context)
+				try ManagedCache.deleteFirst(in: context)
 				if context.hasChanges {
 					try context.save()
 				}

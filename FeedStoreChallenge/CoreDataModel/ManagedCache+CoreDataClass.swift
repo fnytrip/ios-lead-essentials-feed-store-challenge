@@ -13,13 +13,17 @@ import CoreData
 @objc(ManagedCache)
 final class ManagedCache: NSManagedObject {
 	static func findFirst(in context: NSManagedObjectContext) throws -> ManagedCache? {
-		let request = ManagedCache.fetchRequest() as NSFetchRequest<ManagedCache>
-		request.returnsObjectsAsFaults = false
-		return try context.fetch(request).first
+		return try findAll(in: context).first
 	}
 
-	static func deleteFirst(in context: NSManagedObjectContext) throws {
-		let _ = try findFirst(in: context).map { context.delete($0) }
+	static func deleteAll(in context: NSManagedObjectContext) throws {
+		try findAll(in: context).forEach(context.delete)
+	}
+
+	static private func findAll(in context: NSManagedObjectContext) throws -> [ManagedCache] {
+		let request = ManagedCache.fetchRequest() as NSFetchRequest<ManagedCache>
+		request.returnsObjectsAsFaults = false
+		return try context.fetch(request)
 	}
 
 	var localFeed: [LocalFeedImage] {
